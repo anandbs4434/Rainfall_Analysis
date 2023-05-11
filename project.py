@@ -21,9 +21,32 @@ def graph1():
     fig.add_annotation(text=conclusion, xref='paper', yref='paper', x=.5, y=1, bgcolor='grey', showarrow=False, font=dict(size=12))
   
 
-    fig1 = px.bar(grouped_obj, x=grouped_obj.index, y='ANNUAL', title='Rainfall year-wise')
-    conclusion = 'The graph shows the yearly rainfall.'
+    month = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT','NOV', 'DEC']
+    fig1 = px.bar(grouped_obj, x=grouped_obj.index, y=month, title='Rainfall month-wise')
+    conclusion = 'The graph shows the monthly rainfall.'
     fig1.add_annotation(text=conclusion, xref='paper', yref='paper', x=.5, y=1, bgcolor='grey', showarrow=False, font=dict(size=12))
+
+    fig2 = px.scatter(grouped_obj, x=grouped_obj.index, y='ANNUAL', title='Rainfall year-wise')
+    conclusion = 'The graph shows the yearly rainfall.'
+    fig2.add_annotation(text=conclusion, xref='paper', yref='paper', x=.5, y=1, bgcolor='grey', showarrow=False, font=dict(size=12))
+
+    return render_template('graph1.html', fig =fig.to_html(), fig1=fig1.to_html(), fig2=fig2.to_html())
+
+
+@app.route('/graph/2')
+def graph2():
+    grouped_obj=  load_data()
+    month = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN']
+    fig = px.bar(grouped_obj, x=grouped_obj.index, y=month, title='Rainfall semi-annual')
+    conclusion = 'The graph shows the Half Yearly rainfall.'
+    fig.add_annotation(text=conclusion, xref='paper', yref='paper', x=.5, y=1, bgcolor='grey', showarrow=False, font=dict(size=12))
+  
+
+    month = ['JUL', 'AUG', 'SEP', 'OCT','NOV', 'DEC']
+    fig = px.bar(grouped_obj, x=grouped_obj.index, y=month, title='Rainfall semi-annual')
+    conclusion = 'The graph shows the Half-Yearly rainfall.'
+    fig.add_annotation(text=conclusion, xref='paper', yref='paper', x=.5, y=1, bgcolor='grey', showarrow=False, font=dict(size=12))
+
 
     fig2 = px.scatter(grouped_obj, x=grouped_obj.index, y='ANNUAL', title='Rainfall year-wise')
     conclusion = 'The graph shows the yearly rainfall.'
