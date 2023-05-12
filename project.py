@@ -271,6 +271,8 @@ def graph13():
 
     return render_template('graph13.html', fig =fig.to_html())
 
+
+
 def retreive_data():
     df = pd.read_csv('dataset/rainfall_India_2017.csv')
     return df 
