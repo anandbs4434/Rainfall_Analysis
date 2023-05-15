@@ -11,7 +11,7 @@ def load_data():
 
 @app.route('/')
 def index():
-    return render_template('eda1.html')
+    return render_template('graph1.html')
     
 @app.route('/graph/1')
 def graph1():
@@ -280,9 +280,7 @@ def retreive_data():
 
 @app.route('/eda/1')
 def eda1():
-    rain = retreive_data()
-    
-    return render_template('eda1.html')
+    return render_template('eda1.html')     
 
     
 
