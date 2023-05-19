@@ -1,9 +1,17 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request   
 import pandas as pd
 import  plotly.express as px
 import numpy as np
+import joblib
 
 app = Flask(__name__)
+
+def predict_rainfall(year, subdivision):
+    model = joblib.load('model.joblib')
+    df = pd.DataFrame({
+        'YEAR': [year],
+        'SUBDIVISION': [subdivision]
+    })
 
 def load_data():
     df = pd.read_csv('dataset/data.csv')
@@ -11,7 +19,7 @@ def load_data():
 
 @app.route('/')
 def index():
-    return render_template('graph1.html')
+    return render_template('predict.html')
     
 @app.route('/graph/1')
 def graph1():
@@ -283,7 +291,18 @@ def eda1():
     return render_template('eda1.html')     
 
     
-
+# predict
+@app.route('/predict', methods=['GET','POST'])
+def predict():
+    subdivisions = load_data()['SUBDIVISION'].unique()
+    years = list(range(2050, 1990, -1))
+    prediction = None
+    if request.method == 'POST':
+        year = int(request.form['year'])
+        subdivision = request.form['subdivision']
+        prediction = predict_rainfall(year, subdivision)
+        return render_template('predict.html', prediction=prediction, year=year, subdivision=subdivision, subdivisions=subdivisions, years=years)
+    return render_template('predict.html', subdivisions=subdivisions, years=years)
 
 if __name__ == '__main__':
   app.run(host='0.0.0.0', port=8000, debug=True)
