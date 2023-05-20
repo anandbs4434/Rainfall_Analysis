@@ -35,7 +35,7 @@
                                     <label for="subdivision" class="form-label">Sub division</label>
                                     <select class="form-select form-select-lg" name="subdivision" id="subdivision">
                                         <option selected>Select one</option>
-                                        {% for s in subdivisions %}
+                                        {% for s in SUBDIVISION %}
                                         <option value="{{s}}">{{s}}</option>
                                         {% endfor %}
                                     </select>
