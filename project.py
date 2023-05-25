@@ -6,20 +6,24 @@ import joblib
 
 app = Flask(__name__)
 
+
+
 def predict_rainfall(year, subdivision):
     model = joblib.load('model.joblib')
     df = pd.DataFrame({
         'YEAR': [year],
         'SUBDIVISION': [subdivision]
     })
+    return model.predict(df)[0]
 
 def load_data():
     df = pd.read_csv('dataset/data.csv')
     return df 
 
+
 @app.route('/')
 def index():
-    return render_template('predict.html')
+    return render_template('eda1.html')
     
 @app.route('/graph/1')
 def graph1():
@@ -302,7 +306,7 @@ def predict():
         subdivision = request.form['subdivision']
         prediction = predict_rainfall(year, subdivision)
         return render_template('predict.html', prediction=prediction, year=year, subdivision=subdivision, subdivisions=subdivisions, years=years)
-    return render_template('predict.html', subdivisions=subdivisions, years=years)
+    return render_template('predict.html', subdivisions=subdivisions, years=years) 
 
 if __name__ == '__main__':
   app.run(host='0.0.0.0', port=8000, debug=True)
